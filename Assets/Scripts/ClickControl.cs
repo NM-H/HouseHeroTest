@@ -4,31 +4,29 @@ using UnityEngine.UI;
 public class ClickControl : MonoBehaviour
 {
     public GameObject key;
-    public GameObject thirdStone;  // The stone hiding the key
+    public GameObject stone11;
     public Text narrationText;
     private bool hasKey = false;
-    private bool keyRevealed = false; // Ensure the key is only revealed once
+    private bool keyRevealed = false;
 
     void Start()
     {
-        key.SetActive(false); // Hide the key at the start
+        key.SetActive(false);
         narrationText.text = "I just got home. I need to find the key to unlock the door.";
     }
 
-    public void OnStoneClick(GameObject clickedStone)
+    public void OnCorrectStoneClick()
     {
-        if (keyRevealed) return; // Stop interaction if the key is already revealed
+        if (keyRevealed) return;
 
-        if (clickedStone == thirdStone)  // Check if the clicked stone is "ThirdStone"
-        {
-            narrationText.text = "There’s something under this stone...";
-            key.SetActive(true);  // Reveal the key
-            keyRevealed = true;  // Prevent multiple reveals
-        }
-        else
-        {
-            narrationText.text = "Just a regular stone. I should try another one.";
-        }
+        narrationText.text = "There’s something under this stone...";
+        key.SetActive(true);
+        keyRevealed = true;
+    }
+
+    public void OnWrongStoneClick()
+    {
+        narrationText.text = "Just a regular stone. I should try another one.";
     }
 
     public void OnKeyClick()
@@ -43,7 +41,7 @@ public class ClickControl : MonoBehaviour
         if (hasKey)
         {
             narrationText.text = "I unlocked the door. Time to head inside.";
-            UnityEngine.SceneManagement.SceneManager.LoadScene("FirstRoom"); // Move to next scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene("FirstRoom");
         }
         else
         {
