@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5245282, g: 0.24337775, b: 0.04255602, a: 1}
+  m_Color: {r: 0.5245282, g: 0.24337775, b: 0.04255602, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -299,8 +299,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 700, y: -200}
-  m_SizeDelta: {x: 150, y: 250}
+  m_AnchoredPosition: {x: 60, y: -110}
+  m_SizeDelta: {x: 220, y: 225}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &333872062
 GameObject:
