@@ -43,7 +43,7 @@ public class ClickControl : MonoBehaviour
         if (hasKey)
         {
             narrationText.text = "I unlocked the door. Time to head inside.";
-            UnityEngine.SceneManagement.SceneManager.LoadScene("InsideHouse"); // Move to next scene
+            UnityEngine.SceneManagement.SceneManager.LoadScene("FirstRoom"); // Move to next scene
         }
         else
         {
