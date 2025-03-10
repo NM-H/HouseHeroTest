@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/OutHouse.unity
     guid: 3ea4cc10a8ed39f43b7ced003e106662
+  - enabled: 1
+    path: Assets/Scenes/FirstRoom.unity
+    guid: b491c636286664895b09766e0db975fa
   m_configObjects: {}
