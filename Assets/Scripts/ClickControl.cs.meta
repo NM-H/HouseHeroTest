@@ -3,7 +3,17 @@ guid: 0657ee198f311dd489fa08f1935f1d62
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - key: {instanceID: 0}
+  - stone11: {instanceID: 0}
+  - door: {instanceID: 0}
+  - narrationText: {instanceID: 0}
+  - mudStain: {instanceID: 0}
+  - dryPlant: {instanceID: 0}
+  - freshPlant: {instanceID: 0}
+  - waterCan: {fileID: 7218685253031238326, guid: d384f410808f540d2a951895d79b6034, type: 3}
+  - towel: {instanceID: 0}
+  - narrationTextFirstRoom: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
