@@ -35,7 +35,7 @@ public class ClickControl : MonoBehaviour
         // Set initial narration text
         if (narrationText != null)
         {
-            narrationText.text = "I just got home. I need to find the key to unlock the door.";
+            narrationText.text = "I just got home. I need to find the key to unlock the door. Dad always tells me to hide the key behind one of the rock tiles, which one did I hide it behind?";
         }
     }
 
