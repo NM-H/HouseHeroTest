@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class ClickControl : MonoBehaviour
 {
-    // ========== SCENE 1 (Outside) ==========
+    // ========== SCENE 1 (OutHouse)
     public GameObject key;
     public GameObject stone11;
     public GameObject door;
@@ -13,11 +14,11 @@ public class ClickControl : MonoBehaviour
     private bool hasKey = false;
     private bool keyRevealed = false;
 
-    // ========== SCENE 2 (First Room) ==========
+    // ========== SCENE 2 (First Room)
     public GameObject MudStain;
     public GameObject DryPlant;
     public GameObject FreshPlant;
-    public GameObject WaterCan;  // Water can object (to pick up)
+    public GameObject WaterCan;
     public GameObject Towel;
 
     private bool hasWaterCan = false;
@@ -25,25 +26,65 @@ public class ClickControl : MonoBehaviour
 
     void Start()
     {
-        // Scene 1 setup
-        if (key != null) key.SetActive(false);
+        string currentScene = SceneManager.GetActiveScene().name;
 
-        // Scene 2 setup
-        if (FreshPlant != null) FreshPlant.SetActive(false);
-
-        // Set initial narration text
-        if (narrationText != null)
+        if (currentScene == "OutHouse")
         {
-            narrationText.text = "I just got home. I need to find the key to unlock the door. Dad always tells me to hide the key behind one of the rock tiles, which one did I hide it behind?";
+            if (key != null) key.SetActive(false);
+
+            // Start the coroutine for the OutHouse scene dialogue
+            StartCoroutine(OutHouseSceneIntroDialogue());
+        }
+        else if (currentScene == "FirstRoom")
+        {
+            if (FreshPlant != null) FreshPlant.SetActive(false);
+
+            StartCoroutine(FirstRoomIntroDialogue());
+        }
+        else if (currentScene == "SecondRoom")
+        {
+            StartCoroutine(SecondRoomIntroDialogue());
         }
     }
 
-    // ===== Scene 1 Methods =====
+    // ===== Dialogue Coroutines =====
+
+    IEnumerator OutHouseSceneIntroDialogue()
+    {
+        narrationText.text = "I just got home. I need to find the key to unlock the door.";
+        yield return new WaitForSeconds(3.5f);
+        narrationText.text = "Dad always tells me to hide the key behind one of the rock tiles, which one did I hide it behind?";
+        yield return new WaitForSeconds(3.5f);
+    }
+
+    IEnumerator FirstRoomIntroDialogue()
+    {
+        narrationText.text = "Home Sweet Home...";
+        yield return new WaitForSeconds(3.5f);
+        narrationText.text = "Oops, it looks like I brought mud inside the house.";
+        yield return new WaitForSeconds(3.5f);
+        narrationText.text = "I need to use the towel to clean this up and water my plant.";
+        yield return new WaitForSeconds(3.5f);
+    }
+
+    IEnumerator SecondRoomIntroDialogue()
+    {
+        narrationText.text = "I'm hungry, I should make myself a sandwich...";
+        yield return new WaitForSeconds(3.5f);
+        narrationText.text = "Ew, what's that smell?";
+        yield return new WaitForSeconds(3.5f);
+        narrationText.text = "I think it's coming from the fridge. Let me check it out.";
+        yield return new WaitForSeconds(3.5f);
+        narrationText.text = "Oh, I need to throw this out and take out the trash.";
+        yield return new WaitForSeconds(3.5f);
+    }
+
+    // Scene 1 Methods
     public void OnCorrectStoneClick()
     {
         if (keyRevealed) return;
 
-        if (narrationText != null) narrationText.text = "There�s something under this stone...";
+        if (narrationText != null) narrationText.text = "There's something under this stone...";
         if (key != null) key.SetActive(true);
         keyRevealed = true;
     }
@@ -73,14 +114,14 @@ public class ClickControl : MonoBehaviour
         }
     }
 
-    // ===== Scene 2 Methods =====
+    // Scene 2 Methods
     public void PickUpTowel()
     {
         if (Towel != null)
         {
             hasTowel = true;
-            Towel.SetActive(false); // Hide the towel object
-            narrationText.text = "I picked up the towel. Now I need to clean the stain.";
+            Towel.SetActive(false);
+            narrationText.text = "I picked up the towel. Now I need to clean the mud stains.";
         }
     }
 
@@ -89,10 +130,11 @@ public class ClickControl : MonoBehaviour
         if (WaterCan != null)
         {
             hasWaterCan = true;
-            WaterCan.SetActive(false); // Hide the water can object
+            WaterCan.SetActive(false);
             narrationText.text = "I picked up the watering can. Now let's water the plant.";
         }
     }
+
     public void CleanMud()
     {
         if (!MudStain) return;
@@ -100,13 +142,14 @@ public class ClickControl : MonoBehaviour
         if (hasTowel && MudStain.activeSelf)
         {
             MudStain.SetActive(false);
-            narrationText.text = "Yay! I cleaned the mud stain with the towel!";
+            narrationText.text = "Yay! I cleaned the mud stains with the towel!";
         }
         else if (!hasTowel)
         {
             narrationText.text = "I need a towel to clean the mud.";
         }
     }
+
     public void WaterPlant()
     {
         if (!DryPlant) return;
@@ -114,7 +157,7 @@ public class ClickControl : MonoBehaviour
         if (hasWaterCan && DryPlant.activeSelf)
         {
             DryPlant.SetActive(false);
-            narrationText.text = "Yay! I watered the plant, and it looks fresh now!";
+            narrationText.text = "Yay! I watered the plant, and it looks fresh now! Let's go to the kitchen";
         }
         else if (!hasWaterCan)
         {
@@ -124,21 +167,7 @@ public class ClickControl : MonoBehaviour
 
     public void GoToSecondRoom()
     {
-        Debug.Log("Going to SecondRoom..."); // Check if function is being called
-        SceneManager.LoadScene("SecondRoom"); // Load the next scene
+        Debug.Log("Going to SecondRoom...");
+        SceneManager.LoadScene("SecondRoom");
     }
-
 }
-// public void WaterPlant()
-// {
-//     if (hasWaterCan && dryPlant != null && dryPlant.activeSelf)
-//     {
-//         dryPlant.SetActive(false);
-//         if (freshPlant != null) freshPlant.SetActive(true);
-//         if (narrationTextFirstRoom != null) narrationTextFirstRoom.text = "You watered the plant, and it looks fresh now!";
-//     }
-//     else if (!hasWaterCan && narrationTextFirstRoom != null)
-//     {
-//         narrationTextFirstRoom.text = "You need a watering can to water the plant.";
-//     }
-// }
