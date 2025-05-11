@@ -980,12 +980,19 @@ MonoBehaviour:
   key: {fileID: 0}
   stone11: {fileID: 0}
   door: {fileID: 0}
+  Trashcan: {fileID: 0}
   narrationText: {fileID: 1212169861}
   MudStain: {fileID: 0}
   DryPlant: {fileID: 0}
   FreshPlant: {fileID: 0}
   WaterCan: {fileID: 0}
   Towel: {fileID: 0}
+  Fridge: {fileID: 1857087465}
+  Sandwich: {fileID: 1237459552}
+  Scene3Trashcan: {fileID: 145574456}
+  Table: {fileID: 1858591523}
+  Homework: {fileID: 1279908152}
+  FridgeSmell: {fileID: 712542784}
 --- !u!4 &1985472776
 Transform:
   m_ObjectHideFlags: 0

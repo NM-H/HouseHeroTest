@@ -5,16 +5,17 @@ using System.Collections;
 
 public class ClickControl : MonoBehaviour
 {
-    // ========== SCENE 1 (OutHouse)
+    // ========== SCENE 1 (OutHouse) ===========
     public GameObject key;
     public GameObject stone11;
     public GameObject door;
+    public GameObject Trashcan;
     public Text narrationText;
 
     private bool hasKey = false;
     private bool keyRevealed = false;
 
-    // ========== SCENE 2 (First Room)
+    // ========== SCENE 2 (FirstRoom) ===========
     public GameObject MudStain;
     public GameObject DryPlant;
     public GameObject FreshPlant;
@@ -24,6 +25,17 @@ public class ClickControl : MonoBehaviour
     private bool hasWaterCan = false;
     private bool hasTowel = false;
 
+    // ========== SCENE 3 (SecondRoom) ===========
+    public GameObject Fridge;
+    public GameObject Sandwich;
+    public GameObject Scene3Trashcan;
+    public GameObject Table;
+    public GameObject Homework;
+    public GameObject FridgeSmell;
+
+    private bool hasSandwich = false;
+    private bool homeworkDone = false;
+
     void Start()
     {
         string currentScene = SceneManager.GetActiveScene().name;
@@ -31,25 +43,24 @@ public class ClickControl : MonoBehaviour
         if (currentScene == "OutHouse")
         {
             if (key != null) key.SetActive(false);
-
-            // Start the coroutine for the OutHouse scene dialogue
-            StartCoroutine(OutHouseSceneIntroDialogue());
+            if (Trashcan != null) Trashcan.SetActive(GameState.TrashTakenOut); // Set Trashcan visibility
+            StartCoroutine(OutsideSceneIntroDialogue());
         }
         else if (currentScene == "FirstRoom")
         {
             if (FreshPlant != null) FreshPlant.SetActive(false);
-
             StartCoroutine(FirstRoomIntroDialogue());
         }
         else if (currentScene == "SecondRoom")
         {
             StartCoroutine(SecondRoomIntroDialogue());
+            if (Sandwich != null) Sandwich.SetActive(false); // Hide sandwich until fridge is opened
+            if (FridgeSmell != null) FridgeSmell.SetActive(!GameState.TrashTakenOut); // Show stink if trash not taken out
         }
     }
 
     // ===== Dialogue Coroutines =====
-
-    IEnumerator OutHouseSceneIntroDialogue()
+    IEnumerator OutsideSceneIntroDialogue()
     {
         narrationText.text = "I just got home. I need to find the key to unlock the door.";
         yield return new WaitForSeconds(3.5f);
@@ -63,13 +74,13 @@ public class ClickControl : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
         narrationText.text = "Oops, it looks like I brought mud inside the house.";
         yield return new WaitForSeconds(3.5f);
-        narrationText.text = "I need to use the towel to clean this up and water my plant.";
+        narrationText.text = "I need to clean this up and water my plant.";
         yield return new WaitForSeconds(3.5f);
     }
 
     IEnumerator SecondRoomIntroDialogue()
     {
-        narrationText.text = "I'm hungry, I should make myself a sandwich...";
+        narrationText.text = "Yay, the Kitchen...";
         yield return new WaitForSeconds(3.5f);
         narrationText.text = "Ew, what's that smell?";
         yield return new WaitForSeconds(3.5f);
@@ -79,7 +90,7 @@ public class ClickControl : MonoBehaviour
         yield return new WaitForSeconds(3.5f);
     }
 
-    // Scene 1 Methods
+    // ===== Scene 1 Methods =====
     public void OnCorrectStoneClick()
     {
         if (keyRevealed) return;
@@ -114,14 +125,14 @@ public class ClickControl : MonoBehaviour
         }
     }
 
-    // Scene 2 Methods
+    // ===== Scene 2 Methods =====
     public void PickUpTowel()
     {
         if (Towel != null)
         {
             hasTowel = true;
             Towel.SetActive(false);
-            narrationText.text = "I picked up the towel. Now I need to clean the mud stains.";
+            narrationText.text = "I picked up the towel. Now I need to clean the stain.";
         }
     }
 
@@ -142,7 +153,7 @@ public class ClickControl : MonoBehaviour
         if (hasTowel && MudStain.activeSelf)
         {
             MudStain.SetActive(false);
-            narrationText.text = "Yay! I cleaned the mud stains with the towel!";
+            narrationText.text = "Yay! I cleaned the mud stain with the towel!";
         }
         else if (!hasTowel)
         {
@@ -157,7 +168,8 @@ public class ClickControl : MonoBehaviour
         if (hasWaterCan && DryPlant.activeSelf)
         {
             DryPlant.SetActive(false);
-            narrationText.text = "Yay! I watered the plant, and it looks fresh now! Let's go to the kitchen";
+            if (FreshPlant != null) FreshPlant.SetActive(true);
+            narrationText.text = "Yay! I watered the plant, and it looks fresh now!";
         }
         else if (!hasWaterCan)
         {
@@ -167,7 +179,48 @@ public class ClickControl : MonoBehaviour
 
     public void GoToSecondRoom()
     {
-        Debug.Log("Going to SecondRoom...");
         SceneManager.LoadScene("SecondRoom");
+    }
+
+    // ===== Scene 3 Methods =====
+    public void OnFridgeClick()
+    {
+        if (narrationText != null) narrationText.text = "There’s a smelly sandwich in here… I should throw it out.";
+        if (Sandwich != null) Sandwich.SetActive(true);
+    }
+
+    public void OnSandwichClick()
+    {
+        if (narrationText != null) narrationText.text = "Gross! I’ll toss this in the trash.";
+        hasSandwich = true;
+        if (Sandwich != null) Sandwich.SetActive(false);
+    }
+
+    public void OnScene3TrashcanClick()
+    {
+        if (hasSandwich)
+        {
+            narrationText.text = "I threw the sandwich out. That smell was awful!";
+            GameState.TrashTakenOut = true; // Update the global state
+            if (FridgeSmell != null) FridgeSmell.SetActive(false); // Remove stink cloud
+        }
+        else
+        {
+            narrationText.text = "I should find what’s making that smell first.";
+        }
+    }
+
+    public void OnTableClick()
+    {
+        if (!homeworkDone)
+        {
+            narrationText.text = "Homework time… alright, all done!";
+            homeworkDone = true;
+            GameState.HomeworkDone = true; // Track homework state
+        }
+        else
+        {
+            narrationText.text = "I already finished my homework.";
+        }
     }
 }
