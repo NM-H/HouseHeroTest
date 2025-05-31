@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SecondRoom.unity
     guid: 319cc4c4233434737a2c96d254d0e118
+  - enabled: 1
+    path: Assets/Scenes/EndScreen.unity
+    guid: ad94f22ca4ff09e43b3ef4d4c17b4b9c
   m_configObjects: {}

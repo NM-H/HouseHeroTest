@@ -671,18 +671,21 @@ MonoBehaviour:
   key: {fileID: 333872062}
   stone11: {fileID: 0}
   door: {fileID: 0}
-  Trashcan: {fileID: 0}
+  OutHouseTrashcan: {fileID: 0}
   MudStain: {fileID: 0}
   DryPlant: {fileID: 0}
   FreshPlant: {fileID: 0}
   WaterCan: {fileID: 0}
   Towel: {fileID: 0}
   Fridge: {fileID: 0}
-  Sandwich: {fileID: 0}
-  Scene3Trashcan: {fileID: 0}
+  OpenFridge: {fileID: 0}
+  Cheese: {fileID: 0}
+  FridgeSmell: {fileID: 0}
+  KitchenTrashCan: {fileID: 0}
+  TrashBag: {fileID: 0}
   Table: {fileID: 0}
   Homework: {fileID: 0}
-  FridgeSmell: {fileID: 0}
+  Panel: {fileID: 0}
 --- !u!114 &241612035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1567,8 +1570,9 @@ GameObject:
   - component: {fileID: 864779751}
   - component: {fileID: 864779750}
   - component: {fileID: 864779749}
+  - component: {fileID: 864779752}
   m_Layer: 5
-  m_Name: Trashcan
+  m_Name: OutHouseTrashcan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1643,6 +1647,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 864779747}
   m_CullTransparentMesh: 1
+--- !u!114 &864779752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864779747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1365902939}
+          m_TargetAssemblyTypeName: ClickControl, Assembly-CSharp
+          m_MethodName: OnOutHouseTrashcanClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &952573798
 GameObject:
   m_ObjectHideFlags: 0
@@ -1783,18 +1816,21 @@ MonoBehaviour:
   key: {fileID: 333872062}
   stone11: {fileID: 0}
   door: {fileID: 0}
-  Trashcan: {fileID: 0}
+  OutHouseTrashcan: {fileID: 0}
   MudStain: {fileID: 0}
   DryPlant: {fileID: 0}
   FreshPlant: {fileID: 0}
   WaterCan: {fileID: 0}
   Towel: {fileID: 0}
   Fridge: {fileID: 0}
-  Sandwich: {fileID: 0}
-  Scene3Trashcan: {fileID: 0}
+  OpenFridge: {fileID: 0}
+  Cheese: {fileID: 0}
+  FridgeSmell: {fileID: 0}
+  KitchenTrashCan: {fileID: 0}
+  TrashBag: {fileID: 0}
   Table: {fileID: 0}
   Homework: {fileID: 0}
-  FridgeSmell: {fileID: 0}
+  Panel: {fileID: 0}
 --- !u!114 &1045639000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2114,7 +2150,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1365902940}
   - component: {fileID: 1365902939}
-  - component: {fileID: 1365902941}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2136,19 +2171,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   key: {fileID: 333872062}
   stone11: {fileID: 241612032}
-  door: {fileID: 0}
-  Trashcan: {fileID: 864779747}
+  door: {fileID: 125601834}
+  OutHouseTrashcan: {fileID: 864779747}
   MudStain: {fileID: 0}
   DryPlant: {fileID: 0}
   FreshPlant: {fileID: 0}
   WaterCan: {fileID: 0}
   Towel: {fileID: 0}
   Fridge: {fileID: 0}
-  Sandwich: {fileID: 0}
-  Scene3Trashcan: {fileID: 0}
+  OpenFridge: {fileID: 0}
+  Cheese: {fileID: 0}
+  FridgeSmell: {fileID: 0}
+  KitchenTrashCan: {fileID: 0}
+  TrashBag: {fileID: 0}
   Table: {fileID: 0}
   Homework: {fileID: 0}
-  FridgeSmell: {fileID: 0}
+  Panel: {fileID: 0}
 --- !u!4 &1365902940
 Transform:
   m_ObjectHideFlags: 0
@@ -2164,18 +2202,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1365902941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1365902938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a90c530542c6c36448a10c744eb2fdc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1496590665
 GameObject:
   m_ObjectHideFlags: 0
