@@ -305,3 +305,4 @@ public class ClickControl : MonoBehaviour
         SceneManager.LoadScene("EndScreen");
     }
 }
+
