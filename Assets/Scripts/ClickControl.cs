@@ -132,12 +132,14 @@ public class ClickControl : MonoBehaviour
     {
         hasKey = true;
         if (key != null) key.SetActive(false);
+        InventoryManager.Instance.AddItem("Key");
         StartSceneDialogue(new List<string> { "I found the key! Now I can unlock the door." });
     }
 
     public void OnDoorClick()
     {
-        if (hasKey || GameState.HasEnteredHouse)
+        // Check if player has key in inventory OR has already entered house
+        if (InventoryManager.Instance.HasItem("Key") || GameState.HasEnteredHouse)
         {
             SceneManager.LoadScene("FirstRoom");
         }
@@ -152,6 +154,7 @@ public class ClickControl : MonoBehaviour
     {
         hasTowel = true;
         if (Towel != null) Towel.SetActive(false);
+        InventoryManager.Instance.AddItem("Towel");
         StartSceneDialogue(new List<string> { "I picked up the towel. Now I can clean the mud stains." });
     }
 
@@ -159,6 +162,7 @@ public class ClickControl : MonoBehaviour
     {
         hasWaterCan = true;
         if (WaterCan != null) WaterCan.SetActive(false);
+        InventoryManager.Instance.AddItem("WateringCan");
         StartSceneDialogue(new List<string> { "I picked up the watering can. Now I can water the plant." });
     }
 
@@ -220,6 +224,7 @@ public class ClickControl : MonoBehaviour
         if (Cheese != null) Cheese.SetActive(false);
         if (OpenFridge != null) OpenFridge.SetActive(false);
         if (Fridge != null) Fridge.SetActive(true);
+        InventoryManager.Instance.AddItem("Cheese");
 
         StartSceneDialogue(new List<string> { "Picked up the smelly cheese. I should throw it away." });
     }
@@ -230,11 +235,13 @@ public class ClickControl : MonoBehaviour
         {
             cheeseThrownOut = true;
             hasCheese = false;
+            InventoryManager.Instance.AddItem("Cheese");
 
             if (TrashBag != null)
             {
                 TrashBag.SetActive(true);
                 GameState.ShowTrashBag = true;
+                InventoryManager.Instance.AddItem("Trashbag");
             }
 
             StartSceneDialogue(new List<string> { "I threw the smelly cheese in the trash. Now to take the trash out." });
@@ -305,3 +312,5 @@ public class ClickControl : MonoBehaviour
         SceneManager.LoadScene("EndScreen");
     }
 }
+
+
