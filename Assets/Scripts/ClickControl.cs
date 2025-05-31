@@ -10,7 +10,6 @@ public class ClickControl : MonoBehaviour
     public GameObject door;
     public GameObject OutHouseTrashcan;
 
-    private bool hasKey = false;
     private bool keyRevealed = false;
 
     // Scene 2 Objects
@@ -65,7 +64,11 @@ public class ClickControl : MonoBehaviour
         }
         else if (currentScene == "FirstRoom")
         {
-            if (FreshPlant != null) FreshPlant.SetActive(false);
+            if (FreshPlant != null) FreshPlant.SetActive(GameState.PlantWatered);
+            if (DryPlant != null) DryPlant.SetActive(!GameState.PlantWatered);
+            if (MudStain != null) MudStain.SetActive(!GameState.MudCleaned);
+            if (Towel != null) Towel.SetActive(!GameState.MudCleaned);
+            if (WaterCan != null) WaterCan.SetActive(!GameState.PlantWatered);
 
             if (!GameState.HasEnteredHouse)
             {
@@ -93,7 +96,7 @@ public class ClickControl : MonoBehaviour
                 if (Homework != null) Homework.SetActive(true);
                 StartSceneDialogue(new List<string> { "It's time to start my homework." });
             }
-            else
+            else if (!GameState.HomeworkDone)
             {
                 if (Homework != null) Homework.SetActive(false);
                 StartSceneDialogue(new List<string>
@@ -130,7 +133,6 @@ public class ClickControl : MonoBehaviour
 
     public void OnKeyClick()
     {
-        hasKey = true;
         if (key != null) key.SetActive(false);
         InventoryManager.Instance.AddItem("Key");
         StartSceneDialogue(new List<string> { "I found the key! Now I can unlock the door." });
@@ -138,7 +140,6 @@ public class ClickControl : MonoBehaviour
 
     public void OnDoorClick()
     {
-        // Check if player has key in inventory OR has already entered house
         if (InventoryManager.Instance.HasItem("Key") || GameState.HasEnteredHouse)
         {
             SceneManager.LoadScene("FirstRoom");
@@ -173,6 +174,7 @@ public class ClickControl : MonoBehaviour
         if (hasTowel && MudStain.activeSelf)
         {
             MudStain.SetActive(false);
+            GameState.MudCleaned = true;
             StartSceneDialogue(new List<string> { "Yay! I cleaned the mud stain with the towel!" });
         }
         else if (!hasTowel)
@@ -189,6 +191,7 @@ public class ClickControl : MonoBehaviour
         {
             DryPlant.SetActive(false);
             if (FreshPlant != null) FreshPlant.SetActive(true);
+            GameState.PlantWatered = true;
             StartSceneDialogue(new List<string>
             {
                 "Yay! I watered the plant, and it looks fresh now.",
@@ -312,5 +315,3 @@ public class ClickControl : MonoBehaviour
         SceneManager.LoadScene("EndScreen");
     }
 }
-
-
