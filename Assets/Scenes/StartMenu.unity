@@ -811,12 +811,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Want to become a House Hero?  \r\nYou just got home from school at 3 PM.
-    Your parents will be back by 5 PM.  \r\nYour goal? Clean the house and finish
-    all the chores before they arrive to make them happy!  \r\nMove around the house
-    using only your mouse, find chores that need to be done, and complete them. 
-    \r\nCan you finish everything in time? Get ready to clean, explore, and be the
-    House Hero!\r\n"
+  m_text: "Want to become a House Hero?  \r\n\nComplete your chores and do your homework
+    after a long day at school before your parents get home.   \r\nClean the house,
+    water the plant and take out the trash before they arrive to make them happy! 
+    \r\nMove around the house using only your mouse, find listed chores that need
+    to be done, and complete them.  \r\nCan you finish everything in time? Get ready
+    to clean, explore, and be the House Hero!\r\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
