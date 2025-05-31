@@ -1,3 +1,4 @@
+// Updated InventoryUI script to persist across scenes
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,21 +25,30 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    private HashSet<string> itemsCollected = new HashSet<string>();
-
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        // Make InventoryUI persist across scenes
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 
-    public void AddItem(string itemName, Sprite itemIcon)
+    void Start()
     {
-        if (itemsCollected.Contains(itemName)) return; // Prevent duplicates
+        // Refresh inventory display when scene loads
+        RefreshInventoryDisplay();
+    }
 
+    private void AddItemSlot(string itemName, Sprite itemIcon)
+    {
         GameObject slot = Instantiate(inventorySlotPrefab, slotContainer);
         slot.GetComponentInChildren<Image>().sprite = itemIcon;
-        itemsCollected.Add(itemName);
     }
 
     public void ShowInventory()
@@ -50,6 +60,7 @@ public class InventoryUI : MonoBehaviour
     {
         canvasGroup.alpha = 0;
     }
+
     public void RefreshInventoryDisplay()
     {
         // Clear existing slots
@@ -59,12 +70,15 @@ public class InventoryUI : MonoBehaviour
         }
 
         // Re-add items from the InventoryManager
-        foreach (string itemName in InventoryManager.Instance.GetItems())
+        if (InventoryManager.Instance != null)
         {
-            Sprite icon = GetIconForItem(itemName);
-            if (icon != null)
+            foreach (string itemName in InventoryManager.Instance.GetItems())
             {
-                AddItem(itemName, icon);
+                Sprite icon = GetIconForItem(itemName);
+                if (icon != null)
+                {
+                    AddItemSlot(itemName, icon);
+                }
             }
         }
     }

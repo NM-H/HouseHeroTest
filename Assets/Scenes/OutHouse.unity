@@ -650,8 +650,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -278.30005, y: 2.6354065}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 3.2397, y: 2.6354065}
+  m_SizeDelta: {x: 663.0796, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &221309323
 MonoBehaviour:
@@ -2768,9 +2768,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b9be728cf3304047a89b01579daf3c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventorySlotPrefab: {fileID: 6508434533586603866, guid: 440d8c89be26e4136ba51a49c79a8de5, type: 3}
-  slotParent: {fileID: 221309322}
+  inventorySlotPrefab: {fileID: 582863706476566063, guid: 3256ca1415e6049eb874c5ba3a4ac024, type: 3}
+  slotContainer: {fileID: 221309322}
   canvasGroup: {fileID: 8356485614991256962}
+  keyIcon: {fileID: 21300000, guid: 344986bcb7ac0a44da7529d4948fa722, type: 3}
+  towelIcon: {fileID: 21300000, guid: 8e1005115685f4ea384f1f73f036de13, type: 3}
+  wateringCanIcon: {fileID: 21300000, guid: 44d2a454342e9430a85b58312a10d81f, type: 3}
+  cheeseIcon: {fileID: 21300000, guid: fa69ab895e9af4d4d85033b6b8a1c61d, type: 3}
+  trashbagIcon: {fileID: 21300000, guid: 7de3b9bbcc00846c4853c2a91e64718e, type: 3}
 --- !u!225 &8356485614991256962
 CanvasGroup:
   m_ObjectHideFlags: 0
