@@ -5,55 +5,40 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    public GameObject inventoryPanel;
-    public List<string> items = new List<string>();
+    private HashSet<string> inventoryItems = new HashSet<string>();
 
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
         else
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-
-    void Update()
-    {
-        Vector2 mousePos = Input.mousePosition;
-        if (mousePos.y > Screen.height - 100)
-        {
-            inventoryPanel.SetActive(true);
-        }
-        else
-        {
-            inventoryPanel.SetActive(false);
+            DontDestroyOnLoad(this.gameObject);
         }
     }
 
     public void AddItem(string itemName)
     {
-        if (!items.Contains(itemName))
-        {
-            items.Add(itemName);
-        }
-        UpdateUI();
+        inventoryItems.Add(itemName);
+        InventoryUI.Instance?.RefreshInventoryDisplay();
+    }
+
+    public bool HasItem(string itemName)
+    {
+        return inventoryItems.Contains(itemName);
     }
 
     public void RemoveItem(string itemName)
     {
-        if (items.Contains(itemName))
-        {
-            items.Remove(itemName);
-        }
-        UpdateUI();
+        inventoryItems.Remove(itemName);
+        InventoryUI.Instance?.RefreshInventoryDisplay();
     }
 
-    public void UpdateUI()
+    public IEnumerable<string> GetItems()
     {
-        // Optional: Update UI elements here (e.g. item icons)
+        return inventoryItems;
     }
 }

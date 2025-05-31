@@ -132,6 +132,7 @@ public class ClickControl : MonoBehaviour
     {
         hasKey = true;
         if (key != null) key.SetActive(false);
+        InventoryManager.Instance.AddItem("Key");
         StartSceneDialogue(new List<string> { "I found the key! Now I can unlock the door." });
     }
 
@@ -305,4 +306,5 @@ public class ClickControl : MonoBehaviour
         SceneManager.LoadScene("EndScreen");
     }
 }
+
 
