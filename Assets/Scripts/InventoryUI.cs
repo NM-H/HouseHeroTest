@@ -51,14 +51,40 @@ public class InventoryUI : MonoBehaviour
         slot.GetComponentInChildren<Image>().sprite = itemIcon;
     }
 
+    void Update()
+    {
+        Vector2 mousePosition = Input.mousePosition;
+        float screenWidth = Screen.width;
+        float screenHeight = Screen.height;
+
+
+        float zoneWidth = 900f;
+        float zoneHeight = 200f;
+
+        bool isInHoverZone = mousePosition.x > screenWidth - zoneWidth && mousePosition.y < zoneHeight;
+
+        if (isInHoverZone)
+        {
+            ShowInventory();
+        }
+        else
+        {
+            HideInventory();
+        }
+    }
+
     public void ShowInventory()
     {
         canvasGroup.alpha = 1;
+        canvasGroup.interactable = true;
+        canvasGroup.blocksRaycasts = true;
     }
 
     public void HideInventory()
     {
         canvasGroup.alpha = 0;
+        canvasGroup.interactable = false;
+        canvasGroup.blocksRaycasts = false;
     }
 
     public void RefreshInventoryDisplay()
