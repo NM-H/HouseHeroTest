@@ -238,13 +238,12 @@ public class ClickControl : MonoBehaviour
         {
             cheeseThrownOut = true;
             hasCheese = false;
-            InventoryManager.Instance.AddItem("Cheese");
+            InventoryManager.Instance.RemoveItem("Cheese");
 
             if (TrashBag != null)
             {
                 TrashBag.SetActive(true);
                 GameState.ShowTrashBag = true;
-                InventoryManager.Instance.AddItem("Trashbag");
             }
 
             StartSceneDialogue(new List<string> { "I threw the smelly cheese in the trash. Now to take the trash out." });
@@ -264,6 +263,7 @@ public class ClickControl : MonoBehaviour
         if (TrashBag != null) TrashBag.SetActive(false);
 
         GameState.TrashBagPickedUp = true;
+        InventoryManager.Instance.AddItem("Trashbag");
 
         StartSceneDialogue(new List<string>
         {
@@ -286,6 +286,7 @@ public class ClickControl : MonoBehaviour
         if (GameState.TrashBagPickedUp)
         {
             GameState.TrashTakenOut = true;
+            InventoryManager.Instance.RemoveItem("Trashbag");
 
             StartSceneDialogue(new List<string> { "Tossed the trash in the bin. Now back to my homework!" });
         }
