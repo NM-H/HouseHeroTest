@@ -31,6 +31,7 @@ public class ClickControl : MonoBehaviour
     public GameObject TrashBag;
     public GameObject Table;
     public GameObject Homework;
+    public GameObject PuzzleCanvas;
     public GameObject Panel;
 
     private bool hasCheese = false;
@@ -301,7 +302,16 @@ public class ClickControl : MonoBehaviour
         if (!homeworkDone)
         {
             if (Homework != null) Homework.SetActive(true);
-            StartSceneDialogue(new List<string> { "Homework time... let's solve this puzzle." });
+            StartSceneDialogue(new List<string> { "Homework time... click to start solving the puzzle." });
+        }
+    }
+
+    public void OnHomeworkClick()
+    {
+        if (!homeworkDone && PuzzleCanvas != null)
+        {
+            PuzzleCanvas.SetActive(true);
+            StartSceneDialogue(new List<string> { "Solve the puzzle to complete your homework!" });
         }
     }
 
@@ -311,6 +321,7 @@ public class ClickControl : MonoBehaviour
         GameState.HomeworkDone = true;
 
         if (Homework != null) Homework.SetActive(false);
+        if (PuzzleCanvas != null) PuzzleCanvas.SetActive(false);
 
         StartSceneDialogue(new List<string> { "All done! Time to relax!" });
         SceneManager.LoadScene("EndScreen");
