@@ -41,4 +41,14 @@ public class InventoryManager : MonoBehaviour
     {
         return inventoryItems;
     }
+
+    public void ClearInventory()
+    {
+        inventoryItems.Clear();
+
+        if (InventoryUI.Instance != null)
+            InventoryUI.Instance.RefreshInventoryDisplay();
+    }
+
 }
+

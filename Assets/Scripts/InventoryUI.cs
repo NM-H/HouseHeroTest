@@ -63,10 +63,14 @@ public class InventoryUI : MonoBehaviour
 
     public void RefreshInventoryDisplay()
     {
-        // Clear existing slots
-        foreach (Transform child in slotContainer)
+        // Safely clear existing slots
+        if (slotContainer != null)
         {
-            Destroy(child.gameObject);
+            foreach (Transform child in slotContainer)
+            {
+                if (child != null)
+                    Destroy(child.gameObject);
+            }
         }
 
         // Re-add items from the InventoryManager
@@ -82,4 +86,5 @@ public class InventoryUI : MonoBehaviour
             }
         }
     }
+
 }
