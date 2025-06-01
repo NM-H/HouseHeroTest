@@ -10,17 +10,12 @@ public class ClickControl : MonoBehaviour
     public GameObject door;
     public GameObject OutHouseTrashcan;
 
-    private bool keyRevealed = false;
-
     // Scene 2 Objects
     public GameObject MudStain;
     public GameObject DryPlant;
     public GameObject FreshPlant;
     public GameObject WaterCan;
     public GameObject Towel;
-
-    private bool hasWaterCan = false;
-    private bool hasTowel = false;
 
     // Scene 3 Objects
     public GameObject Fridge;
@@ -33,13 +28,26 @@ public class ClickControl : MonoBehaviour
     public GameObject Homework;
     public GameObject Panel;
 
+    // Puzzle UI
+    public GameObject PuzzleCanvas;
+
+    // State flags
+    private bool keyRevealed = false;
+    private bool hasTowel = false;
+    private bool hasWaterCan = false;
     private bool hasCheese = false;
     private bool cheeseThrownOut = false;
+    private bool homeworkStarted = false;
     private bool homeworkDone = false;
 
     void Start()
     {
         string currentScene = SceneManager.GetActiveScene().name;
+
+        if (PuzzleCanvas != null)
+        {
+            PuzzleCanvas.SetActive(false);
+        }
 
         if (currentScene == "OutHouse")
         {
@@ -48,15 +56,13 @@ public class ClickControl : MonoBehaviour
 
             if (GameState.TrashBagPickedUp)
             {
-                StartSceneDialogue(new List<string>
-                {
+                StartSceneDialogue(new List<string> {
                     "Throw the trashbag into the trashcan and go back to the kitchen to do your homework."
                 });
             }
             else
             {
-                StartSceneDialogue(new List<string>
-                {
+                StartSceneDialogue(new List<string> {
                     "I just got home. I need to find the key to unlock the door.",
                     "Dad always tells me to hide the key behind one of the rock tiles... which one did I hide it behind?"
                 });
@@ -65,15 +71,13 @@ public class ClickControl : MonoBehaviour
         else if (currentScene == "FirstRoom")
         {
             if (FreshPlant != null) FreshPlant.SetActive(GameState.PlantWatered);
-            if (DryPlant != null) DryPlant.SetActive(!GameState.PlantWatered);
             if (MudStain != null) MudStain.SetActive(!GameState.MudCleaned);
-            if (Towel != null) Towel.SetActive(!GameState.MudCleaned);
-            if (WaterCan != null) WaterCan.SetActive(!GameState.PlantWatered);
+            if (WaterCan != null) WaterCan.SetActive(!GameState.TrashTakenOut);
+            if (Towel != null) Towel.SetActive(!GameState.TrashTakenOut);
 
             if (!GameState.HasEnteredHouse)
             {
-                StartSceneDialogue(new List<string>
-                {
+                StartSceneDialogue(new List<string> {
                     "Home Sweet Home...",
                     "Oops, it looks like I brought mud inside the house.",
                     "I need to clean this up with a towel.",
@@ -90,24 +94,21 @@ public class ClickControl : MonoBehaviour
             if (Cheese != null) Cheese.SetActive(false);
             if (FridgeSmell != null) FridgeSmell.SetActive(!GameState.TrashTakenOut);
             if (Panel != null) Panel.SetActive(true);
+            if (Homework != null) Homework.SetActive(!GameState.HomeworkDone);
+            if (TrashBag != null) TrashBag.SetActive(GameState.ShowTrashBag);
 
             if (GameState.TrashTakenOut && !GameState.HomeworkDone)
             {
-                if (Homework != null) Homework.SetActive(true);
                 StartSceneDialogue(new List<string> { "It's time to start my homework." });
             }
             else if (!GameState.HomeworkDone)
             {
-                if (Homework != null) Homework.SetActive(false);
-                StartSceneDialogue(new List<string>
-                {
+                StartSceneDialogue(new List<string> {
                     "Yay, the kitchen...",
                     "Ew, what's that smell?",
                     "I think it's coming from the fridge. Let me check it out."
                 });
             }
-
-            if (TrashBag != null) TrashBag.SetActive(GameState.ShowTrashBag);
         }
     }
 
@@ -116,7 +117,7 @@ public class ClickControl : MonoBehaviour
         DialogueManager.Instance?.StartDialogue(lines);
     }
 
-    // Scene 1
+    // Stone Clicks
     public void OnCorrectStoneClick()
     {
         if (keyRevealed) return;
@@ -150,7 +151,7 @@ public class ClickControl : MonoBehaviour
         }
     }
 
-    // Scene 2
+    // Cleaning Room
     public void PickUpTowel()
     {
         hasTowel = true;
@@ -192,8 +193,7 @@ public class ClickControl : MonoBehaviour
             DryPlant.SetActive(false);
             if (FreshPlant != null) FreshPlant.SetActive(true);
             GameState.PlantWatered = true;
-            StartSceneDialogue(new List<string>
-            {
+            StartSceneDialogue(new List<string> {
                 "Yay! I watered the plant, and it looks fresh now.",
                 "I'm feeling hungry... Let's go get a sandwich from the kitchen, then start my homework."
             });
@@ -209,7 +209,7 @@ public class ClickControl : MonoBehaviour
         SceneManager.LoadScene("SecondRoom");
     }
 
-    // Scene 3
+    // Kitchen Logic
     public void OnFridgeClick()
     {
         if (Fridge != null) Fridge.SetActive(false);
@@ -238,7 +238,6 @@ public class ClickControl : MonoBehaviour
         {
             cheeseThrownOut = true;
             hasCheese = false;
-            InventoryManager.Instance.AddItem("Cheese");
 
             if (TrashBag != null)
             {
@@ -265,8 +264,7 @@ public class ClickControl : MonoBehaviour
 
         GameState.TrashBagPickedUp = true;
 
-        StartSceneDialogue(new List<string>
-        {
+        StartSceneDialogue(new List<string> {
             "Now I need to throw the trashbag into the outside trashcan and get back to the kitchen to do my homework."
         });
     }
@@ -295,12 +293,12 @@ public class ClickControl : MonoBehaviour
         }
     }
 
-    public void OnTableClick()
+    public void OnHomeworkClick()
     {
-        if (!homeworkDone)
+        if (!GameState.HomeworkDone && PuzzleCanvas != null)
         {
-            if (Homework != null) Homework.SetActive(true);
-            StartSceneDialogue(new List<string> { "Homework time... let's solve this puzzle." });
+            PuzzleCanvas.SetActive(true);
+            StartSceneDialogue(new List<string> { "Solve the puzzle to complete your homework!" });
         }
     }
 
@@ -310,6 +308,7 @@ public class ClickControl : MonoBehaviour
         GameState.HomeworkDone = true;
 
         if (Homework != null) Homework.SetActive(false);
+        if (PuzzleCanvas != null) PuzzleCanvas.SetActive(false);
 
         StartSceneDialogue(new List<string> { "All done! Time to relax!" });
         SceneManager.LoadScene("EndScreen");
